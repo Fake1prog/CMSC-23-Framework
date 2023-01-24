@@ -1,0 +1,68 @@
+package up.cmsc123;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class CheckBox extends JFrame implements ActionListener{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7387625319393672583L;
+	private JLabel label;
+	private JCheckBox[] checkbox;
+	private JButton button;
+	private JPanel panel;
+	private String[] labelText;
+	private int num;
+	
+	public CheckBox(){
+		super("Checkbox");
+		setLayout(new FlowLayout());
+		
+		label = new JLabel("Please select the checkbox of your choice.");
+		add(label);
+		
+		num = Integer.parseInt(JOptionPane.showInputDialog("How many checkbox do you want to create?"));
+		labelText = new String[num];
+		
+		for(int i = 0; i < num; i++){
+			labelText[i] = JOptionPane.showInputDialog("Enter the label of the checkbox: ");
+		}
+		
+		checkbox = new JCheckBox[num];
+		
+		for(int i = 0; i < num; i++){
+			checkbox[i] = new JCheckBox(labelText[i]);
+			add(checkbox[i]);
+		}
+		
+		button = new JButton("Submit");
+		add(button);
+		button.addActionListener(this);
+		
+		panel = new JPanel();
+		panel.setPreferredSize(new Dimension(300,300));
+		panel.setBackground(Color.WHITE);
+		add(panel);
+	}
+	
+	public void actionPerformed(ActionEvent event){
+		String output = "";
+		for(int i = 0; i < num; i++){
+			if(checkbox[i].isSelected()){
+				output += checkbox[i].getText() + " ";
+			}
+		}
+		JOptionPane.showMessageDialog(null, "You have selected: " + output);
+		System.exit(0);
+	}
+	
+	public static void main(String[] args){
+		CheckBox frame = new CheckBox();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(300,300);
+		frame.setVisible(true);
+	}
+}
